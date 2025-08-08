@@ -56,15 +56,29 @@ require("recent_picker").setup()
 
 ---
 
+Great idea — it's very helpful to **explicitly mention which files users should edit** in their Neovim config. Below is the **updated Usage section** of your `README.md`, now with comments on **which files to update** in a typical Neovim config.
+
+You can replace the current **Usage** section in your README with the following:
+
+---
+
 ## 🎯 Usage
 
 ### ▶️ Manual Command
+
+From Neovim’s command line:
 
 ```vim
 :lua require("recent_picker").open_picker()
 ```
 
+---
+
 ### 🎹 Keybinding Example
+
+To bind the picker to `<leader>r`, add the following in your **keymap file**, typically:
+
+> `~/.config/nvim/lua/-your file-/remap/init.lua` (or wherever you define your keymaps)
 
 ```lua
 vim.keymap.set("n", "<leader>r", function()
@@ -72,7 +86,31 @@ vim.keymap.set("n", "<leader>r", function()
 end, { desc = "Open recent files picker" })
 ```
 
-Press `<leader>r` to open the recent files menu.
+---
+
+### ⚙️ Plugin Setup
+
+Make sure `recent_picker` is initialized. Add this to your plugin config or main init module:
+
+> `~/.config/nvim/lua/-your file-/init.lua` or `~/.config/nvim/init.lua`
+
+```lua
+require("recent_picker").setup()
+```
+
+---
+
+### 🚀 Auto-Launch on Startup (Optional)
+
+To automatically show the picker on startup, add this anywhere after setup (same file as above):
+
+```lua
+vim.defer_fn(function()
+  require("recent_picker").open_picker()
+end, 100)
+```
+
+
 
 ---
 
@@ -116,7 +154,7 @@ for i = 1, math.min(5, #files) do
 ~/.config/nvim/
 ├── init.lua
 ├── lua/
-│   ├── tm/
+│   ├── -your file-/
 │   │   ├── init.lua
 │   │   ├── packer.lua
 │   │   └── remap/init.lua
