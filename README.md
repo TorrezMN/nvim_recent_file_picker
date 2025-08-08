@@ -169,3 +169,4 @@ MIT — do whatever you want with it.
 Let me know if you want a version that includes screenshots or turns this into a GitHub-ready plugin template.
 
 # nvim_recent_file_picker
+# nvim_recent_file_picker
