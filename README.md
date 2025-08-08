@@ -1,36 +1,26 @@
-Great — your `README.md` is solid! You just need to **update the installation instructions** to reflect that the plugin is now a proper GitHub-hosted project, installable with Packer or other plugin managers.
 
-Here's a cleaned-up, improved version of your README with:
 
-* ✅ Correct Packer installation instructions
-* ✅ Updated title and cleanup
-* ✅ Removal of outdated "local plugin" references
-* ✅ Ready to publish on GitHub as `recent_picker.nvim`
-
----
-
-````markdown
 # 📂 recent_picker.nvim
 
-A **lightweight Neovim plugin** that tracks recently opened files across sessions and displays the **last 5** in a **Telescope picker** when triggered — optionally on startup.
+A **lightweight Neovim plugin** that tracks recently opened files across sessions and displays the **last 5** in a **Telescope picker**.
 
-Useful for jumping straight back into what you were working on last time.
+Great for jumping straight back into what you were working on.
 
 ---
 
 ## ✨ Features
 
-- 📜 Tracks recently opened files using an autocommand.
-- 🔍 Opens a Telescope-powered picker showing the 5 most recent files.
-- 🧠 Persistent history across sessions (stored in `recent_files.txt`).
-- ⚡ Keybinding or auto-popup on startup.
-- 🪶 No external dependencies beyond `telescope.nvim`.
+- 📜 Tracks recently opened files automatically.
+- 🔍 Shows the 5 most recent files in a Telescope picker.
+- 🧠 Persistent history across sessions.
+- ⚡ Trigger manually, with a keybinding, or automatically on startup.
+- 🪶 Minimal dependencies (`telescope.nvim` + `plenary.nvim`).
 
 ---
 
 ## 📦 Requirements
 
-- Neovim 0.7+
+- Neovim **0.7+**
 - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 
@@ -38,11 +28,11 @@ Useful for jumping straight back into what you were working on last time.
 
 ## 🛠️ Installation
 
-Use [packer.nvim](https://github.com/wbthomason/packer.nvim):
+Using **[packer.nvim](https://github.com/wbthomason/packer.nvim)**:
 
 ```lua
 use {
-  'your-username/recent_picker.nvim',
+  'TorrezMN/recent_picker.nvim',
   requires = { 'nvim-telescope/telescope.nvim' },
   config = function()
     require("recent_picker").setup()
@@ -50,17 +40,15 @@ use {
 }
 ````
 
-> 🔁 Replace `'your-username'` with your actual GitHub username.
-
-You can also use other plugin managers like `lazy.nvim` or `vim-plug` with the correct GitHub path.
+Other plugin managers (like `lazy.nvim`) are also supported — just make sure to run `require("recent_picker").setup()` after loading.
 
 ---
 
 ## 🔧 Setup
 
-After installation, the plugin will automatically start tracking files.
+After installing, the plugin will automatically start tracking recently opened files.
 
-If you want to call it manually, just require it:
+If you need to set it up manually (optional):
 
 ```lua
 require("recent_picker").setup()
@@ -70,29 +58,27 @@ require("recent_picker").setup()
 
 ## 🎯 Usage
 
-### Manual Picker Call
+### ▶️ Manual Command
 
 ```vim
 :lua require("recent_picker").open_picker()
 ```
 
-### Keybinding
-
-Add this to your remaps file (e.g. `lua/tm/remap/init.lua`):
+### 🎹 Keybinding Example
 
 ```lua
 vim.keymap.set("n", "<leader>r", function()
   require("recent_picker").open_picker()
-end, { desc = "Recent files picker" })
+end, { desc = "Open recent files picker" })
 ```
 
-Now pressing `<leader>r` opens the list of recent files.
+Press `<leader>r` to open the recent files menu.
 
 ---
 
-## ⚙️ Optional: Auto-Launch on Startup
+## ⚙️ Optional: Auto-Open on Startup
 
-To open the picker every time Neovim launches:
+To show the recent file picker automatically when Neovim starts:
 
 ```lua
 vim.defer_fn(function()
@@ -100,36 +86,31 @@ vim.defer_fn(function()
 end, 100)
 ```
 
-Or modify your plugin’s `setup()` to include that line.
-
 ---
 
-## 🗃️ How It Works
+## 📁 How It Works
 
-* Stores recent file paths in:
+* Saves file history to:
   `~/.local/share/nvim/recent_files.txt`
-* History size: **50 files max**
-* Picker shows: **last 5 readable files**
-* Skips unreadable or duplicate entries
+* Maintains the **last 50** opened files
+* Filters out duplicates and unreadable files
+* Only shows the **5 most recent** by default
 
 ---
 
-## 💡 Tips
+## 🧠 Tips
 
-* History updates on every file open (`BufReadPost`)
-* To customize the number of files shown:
+* You can change how many files are shown by modifying this line:
 
 ```lua
 for i = 1, math.min(5, #files) do
 ```
 
-* Can be combined with Harpoon or bookmarks.
+* This plugin pairs well with `harpoon.nvim` or project session tools.
 
 ---
 
-## 🧪 Example Config Tree
-
-Assuming a config like this:
+## 🧪 Example Neovim Config Layout
 
 ```
 ~/.config/nvim/
@@ -141,56 +122,40 @@ Assuming a config like this:
 │   │   └── remap/init.lua
 ```
 
-Just install the plugin via Packer and call `require("recent_picker").setup()` during setup.
+Just ensure your plugin manager installs `recent_picker.nvim` and calls `setup()`.
 
 ---
 
-## 🔄 Reload
+## 🔄 Reload or Update
 
-Restart Neovim or run:
+After making changes to your config or the plugin:
 
 ```vim
+:PackerSync
 :luafile %
 ```
-
-To reload your config.
 
 ---
 
 ## ✅ Future Ideas
 
-* Sort by last opened timestamp
-* Show file preview in picker
-* Remove items from history
-* Fallback UI with `vim.ui.select`
+* ⏳ Sort files by last access time
+* 🖼️ File preview inside picker
+* 🧹 Option to clear/remove items from history
+* 🪄 Use `vim.ui.select` as fallback for non-Telescope users
 
 ---
 
 ## 📄 License
 
-MIT — do whatever you want with it.
+MIT License — feel free to use, modify, or contribute.
 
 ---
 
-## 📡 GitHub
+## 🌍 GitHub
 
-Feel free to open issues, suggest improvements, or submit PRs:
 [https://github.com/your-username/recent\_picker.nvim](https://github.com/your-username/recent_picker.nvim)
 
-> Be sure to replace placeholder GitHub URLs with your actual ones!
-
-```
-
 ---
 
-### ✅ Final To-Do:
-
-1. Replace `your-username` with your actual GitHub username in the code snippets and GitHub URL.
-2. Add this to your repo as `README.md`.
-3. (Optional but recommended): Add a `LICENSE` file (MIT is perfect for plugins).
-
----
-
-Would you like me to generate a `LICENSE` file for you now?
-```
 
